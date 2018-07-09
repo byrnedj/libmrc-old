@@ -1,0 +1,39 @@
+libmrc
+------
+
+The goal of libmrc is to provide a black box implementation
+of miss ratio curve APIs for applications wishing to use
+them in memory management.
+
+We use the Average Eviction Time algorithm that measures reuse
+time of references. Default sample rate is 1/10,000. Default
+interval is 1000 objects. 
+
+RIGHT NOW:
+Sampling is done on critical path, no threading yet.
+
+IN THE FUTURE:
+There is a sampler thread in order to take samples off the 
+critical path. The sampler thread
+is a producer/consumer queue and updates the internal reuse time
+histogram in the mrc_t data structure
+
+When the solver is invoked, it will return the application's
+miss ratio curve and the estimated working set size (N). 
+This is best done in an application's background thread in
+order to avoid critical path overhead.
+
+------
+
+Example usage:
+
+#include <mrc.h>
+
+mrc_t *app_mrc = init_mrc(sample_rate,mrc_interval);
+//on data reference
+take_sample(app_mrc,app_reference);
+...
+solve_mrc(app_mrc);
+miss_ratio_at_100_objects = app_mrc->mrc[100];
+
+
