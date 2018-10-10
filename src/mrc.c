@@ -183,8 +183,9 @@ void solve_mrc(mrc_t *a_mrc)
     uint64_t c = 1;
     double cmiss_rate = 0;
 
-    a_mrc->mrc_size = (a_mrc->m / a_mrc->mrc_interval) + 1;
+    a_mrc->mrc_size = a_mrc->m + 1;
     a_mrc->mrc = (double*)calloc(a_mrc->mrc_size,sizeof(double));
+    uint64_t mrc_i = 1;
     
     while (c <= a_mrc->m)
     {
@@ -211,7 +212,8 @@ void solve_mrc(mrc_t *a_mrc)
         {
             cmiss_rate = (N-sum)/N;
             
-            a_mrc->mrc[c/a_mrc->mrc_interval] = cmiss_rate;
+            a_mrc->mrc[mrc_i] = cmiss_rate;
+            mrc_i += 1;
 
         }
         c++;
