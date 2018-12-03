@@ -15,13 +15,11 @@ all: ${TARGET_LIB}
 $(TARGET_LIB): $(OBJS)
 	echo "[Link (Static)]"
 	ar rcs $@ $^
-	#$(CC) ${LDFLAGS} -o $@ $^
 
-$(SRCS:.c=.d):%.d:%.c
+.c.o:
 	echo "Compile $<"
 	$(CC) -c $(CFLAGS) $< -o $@
 
-include $(SRCS:.c=.d)
 
 .PHONY: clean
 clean:
