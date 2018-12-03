@@ -1,6 +1,6 @@
 
-#include "mrc.h"
-#include "uthash.h"
+#include "../include/mrc.h"
+#include "../include/uthash.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
